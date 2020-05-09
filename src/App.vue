@@ -166,10 +166,13 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    padding-bottom: 0.7em;
+    margin-bottom: 0.7em;
   }
   .education-item:last-child {
     padding-bottom: 0;
+  }
+  .education-item:hover {
+    box-shadow: 0 0 1px rgba(0,0,0,0.3);
   }
   .education-item__title {
     padding-bottom: 0.2em;
