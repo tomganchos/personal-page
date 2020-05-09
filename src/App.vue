@@ -20,7 +20,7 @@
         </ul>
       </div>
       <div class="header-avatar">
-        Avatar
+        <avatar-component/>
       </div>
       <ul class="link-list">
         <link-component v-for="item in links"
@@ -38,9 +38,11 @@
 // import HelloWorld from './components/HelloWorld.vue'
 
 import LinkComponent from "@/components/linkComponent";
+import AvatarComponent from "@/components/AvatarComponent";
 export default {
   name: 'App',
   components: {
+    AvatarComponent,
     LinkComponent
     // HelloWorld
   },
@@ -105,26 +107,103 @@ export default {
   header {
     max-width: 1200px;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 400px 400px 400px;
+    grid-template-rows: 60px auto auto;
+    margin-top: 5em;
   }
   .header-name {
     font-weight: normal;
     font-size: 2em;
+    margin: 0 0 0.25em 0;
+    justify-self: end;
   }
   .experience-list {
     grid-column: 1;
     grid-row: 2;
+    margin: 0;
+    padding: 0;
+    justify-self: end;
+    list-style: none;
+  }
+  .experience-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    padding-bottom: 0.7em;
+  }
+  .experience-item:last-child {
+    padding-bottom: 0;
+  }
+  .experience-item__title {
+    padding-bottom: 0.2em;
+    text-align: right;
+  }
+  .experience-item__description {
+    color: #999;
+    font-size: 0.9em;
+    text-align: right;
   }
   .header-education {
     grid-column: 1;
     grid-row: 3;
+    align-self: flex-end;
+  }
+  .education-title {
+    display: flex;
+    margin: 0;
+    justify-content: flex-end;
+    font-size: 0.8em;
+    color: #999;
+    font-weight: normal;
+    margin-bottom: 0.3em;
+  }
+  .education-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .education-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    padding-bottom: 0.7em;
+  }
+  .education-item:last-child {
+    padding-bottom: 0;
+  }
+  .education-item__title {
+    padding-bottom: 0.2em;
+    text-align: right;
+  }
+  .education-item__description {
+    text-align: right;
+    color: #999;
+    font-size: 0.9em;
   }
   .header-avatar {
     grid-column: 2;
     grid-row: 1 / 4;
+    justify-self: center;
+    align-self: center;
+    height: 300px;
+    width: 400px;
   }
   .link-list {
     grid-column: 3;
     grid-row: 2 / 4;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .link-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+  }
+  .link-item:first-child {
+    padding-top: 0;
+  }
+  .link-item:last-child {
+    padding-bottom: 0;
   }
 </style>

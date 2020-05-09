@@ -73,5 +73,14 @@
 </script>
 
 <style scoped>
-
+  .link-item__icon {
+    list-style: none;
+    display: flex;
+  }
+  .link-item__icon >>>svg {
+    height: 2em;
+  }
+  .link-item__text {
+    margin-left: 1em;
+  }
 </style>
