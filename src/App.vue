@@ -31,6 +31,10 @@
                         class="link-item"/>
       </ul>
     </header>
+    <div class="divider"/>
+    <main>
+      <project-component v-for="item in projects" :key="item.name"/>
+    </main>
   </div>
 </template>
 
@@ -39,9 +43,11 @@
 
 import LinkComponent from "@/components/linkComponent";
 import AvatarComponent from "@/components/AvatarComponent";
+import ProjectComponent from "@/components/projectComponent";
 export default {
   name: 'App',
   components: {
+    ProjectComponent,
     AvatarComponent,
     LinkComponent
     // HelloWorld
@@ -90,6 +96,56 @@ export default {
           description: 'steamcommunity.com/id/tomganchos',
           icon: 'steam'
         },
+      ],
+      projects: [
+        {
+          name: 'gameLife',
+          description: 'Conway\'s Game of Life',
+          tags: ['Vue', 'css'],
+          img: ''
+        },
+        {
+          name: 'tourismSite',
+          description: 'Site of Pskov child tourism',
+          tags: ['Vue', 'css'],
+          img: ''
+        },
+        {
+          name: 'tourismSite',
+          description: 'Site of Pskov child tourism',
+          tags: ['Vue', 'css'],
+          img: ''
+        },
+        {
+          name: 'tourismSite',
+          description: 'Site of Pskov child tourism',
+          tags: ['Vue', 'css'],
+          img: ''
+        },
+        {
+          name: 'tourismSite',
+          description: 'Site of Pskov child tourism',
+          tags: ['Vue', 'css'],
+          img: ''
+        },
+        {
+          name: 'tourismSite',
+          description: 'Site of Pskov child tourism',
+          tags: ['Vue', 'css'],
+          img: ''
+        },
+        {
+          name: 'tourismSite',
+          description: 'Site of Pskov child tourism',
+          tags: ['Vue', 'css'],
+          img: ''
+        },
+        {
+          name: 'tourismSite',
+          description: 'Site of Pskov child tourism',
+          tags: ['Vue', 'css'],
+          img: ''
+        }
       ]
     }
   }
@@ -102,7 +158,8 @@ export default {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
   }
   header {
     max-width: 1200px;
@@ -131,6 +188,10 @@ export default {
     align-items: flex-end;
     padding-bottom: 0.7em;
   }
+  .experience-item:hover {
+    color: darkcyan;
+    cursor: pointer;
+  }
   .experience-item:last-child {
     padding-bottom: 0;
   }
@@ -142,6 +203,9 @@ export default {
     color: #999;
     font-size: 0.9em;
     text-align: right;
+  }
+  .experience-item:hover .experience-item__description {
+    color: darkcyan;
   }
   .header-education {
     grid-column: 1;
@@ -169,10 +233,11 @@ export default {
     margin-bottom: 0.7em;
   }
   .education-item:last-child {
-    padding-bottom: 0;
+    margin-bottom: 0;
   }
   .education-item:hover {
-    box-shadow: 0 0 1px rgba(0,0,0,0.3);
+    color: darkcyan;
+    cursor: pointer;
   }
   .education-item__title {
     padding-bottom: 0.2em;
@@ -183,13 +248,17 @@ export default {
     color: #999;
     font-size: 0.9em;
   }
+  .education-item:hover .education-item__description {
+    color: darkcyan;
+  }
   .header-avatar {
     grid-column: 2;
     grid-row: 1 / 4;
-    justify-self: center;
-    align-self: center;
     height: 300px;
     width: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   .link-list {
     grid-column: 3;
@@ -203,10 +272,31 @@ export default {
     align-items: center;
     padding: 10px 0;
   }
+  .link-item:hover {
+    color: darkcyan;
+    cursor: pointer;
+  }
+  /*>>>.link-item path:hover {*/
+  /*  fill: red !important;*/
+  /*  display: none;*/
+  /*}*/
   .link-item:first-child {
     padding-top: 0;
   }
   .link-item:last-child {
     padding-bottom: 0;
+  }
+  .divider {
+    margin: 50px 0;
+    width: 1200px;
+    height: 4px;
+    background-color: #B4D6D3;
+    border-radius: 50%;
+  }
+  main {
+    display: grid;
+    grid-template-columns: 300px 300px 300px;
+    grid-template-rows: 200px 200px 200px;
+    grid-gap: 50px;
   }
 </style>
