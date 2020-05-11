@@ -55,7 +55,6 @@ export default {
   },
   data () {
     return {
-
       experience: [
         {
           title: 'Front-end developer - OOO "Aeronavigator"',
@@ -116,42 +115,43 @@ export default {
           img: ''
         },
         {
-          name: 'tourismSite',
+          name: 'tourismSite1',
           description: 'Site of Pskov child tourism',
           tags: ['Vue', 'css'],
           img: ''
         },
         {
-          name: 'tourismSite',
+          name: 'tourismSite2',
           description: 'Site of Pskov child tourism',
           tags: ['Vue', 'css'],
           img: ''
         },
         {
-          name: 'tourismSite',
+          name: 'tourismSite3',
           description: 'Site of Pskov child tourism',
           tags: ['Vue', 'css'],
           img: ''
         },
         {
-          name: 'tourismSite',
+          name: 'tourismSite4',
           description: 'Site of Pskov child tourism',
           tags: ['Vue', 'css'],
           img: ''
         },
         {
-          name: 'tourismSite',
+          name: 'tourismSite5',
           description: 'Site of Pskov child tourism',
           tags: ['Vue', 'css'],
           img: ''
         },
         {
-          name: 'tourismSite',
+          name: 'tourismSite6',
           description: 'Site of Pskov child tourism',
           tags: ['Vue', 'css'],
           img: ''
         }
-      ]
+      ],
+      themeColor: 'white-color'
     }
   },
   mounted () {
@@ -174,12 +174,21 @@ export default {
       gsap.from('.project[data-index="' + index + '"]', {opacity: 0, duration: 0.5, delay: delay, y: -20})
       delay += 0.1
     })
+    this.setThemeColor()
   },
   methods: {
     openNewWindow (link) {
       let otherWindow = window.open();
       otherWindow.opener = null;
       otherWindow.location = link;
+    },
+    setThemeColor () {
+      setInterval(() => {
+        const palette = ['#FFDBA2', '#E8F1F2', '#C0DF85', '#E9F7CA', '#6CCFF6']
+        this.themeColor = palette[Math.floor(Math.random() * palette.length)]
+        console.log(this.themeColor)
+        gsap.to('#app', {backgroundImage: 'linear-gradient(to bottom, ' + this.themeColor + ' 0%, #FFFFFF 50%)', duration: 10 })
+      }, 10000)
     }
   }
 }
@@ -193,6 +202,8 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
+    background: linear-gradient(180deg, #b4d6d335 0%, #FFFFFF 50%);
+    transition: background 1000ms linear;
   }
   header {
     max-width: 1200px;
