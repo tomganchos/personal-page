@@ -5,7 +5,7 @@
     <header>
       <h1 class="header-name">Artem Kriuchkov</h1>
       <ul class="experience-list">
-        <li v-for="item in experience" :key="item.description" class="experience-item">
+        <li v-for="item in experience" :key="item.description" class="experience-item" @click="openNewWindow(item.link)">
           <span class="experience-item__title">{{ item.title }}</span>
           <span class="experience-item__description">{{ item.description }}</span>
         </li>
@@ -13,7 +13,7 @@
       <div class="header-education">
         <h2 class="education-title">Education</h2>
         <ul class="education-list">
-          <li v-for="item in education" :key="item.description" class="education-item">
+          <li v-for="item in education" :key="item.description" class="education-item" @click="openNewWindow(item.link)">
             <span class="education-item__title">{{ item.title }}</span>
             <span class="education-item__description">{{ item.description }}</span>
           </li>
@@ -23,51 +23,56 @@
         <avatar-component/>
       </div>
       <ul class="link-list">
-        <link-component v-for="item in links"
+        <link-component v-for="(item, index) in links"
                         :key="item.icon"
                         :icon="item.icon"
                         :link="item.link"
                         :description="item.description"
+                        :data-index="index"
                         class="link-item"/>
       </ul>
     </header>
     <div class="divider"/>
     <main>
-      <project-component v-for="item in projects" :key="item.name"/>
+      <project-component v-for="(item, index) in projects" :key="item.name" :data-index="index"/>
     </main>
   </div>
 </template>
 
 <script>
-// import HelloWorld from './components/HelloWorld.vue'
+  import { gsap } from "gsap"
 
-import LinkComponent from "@/components/linkComponent";
-import AvatarComponent from "@/components/AvatarComponent";
-import ProjectComponent from "@/components/projectComponent";
+  import LinkComponent from "@/components/linkComponent"
+  import AvatarComponent from "@/components/AvatarComponent"
+  import ProjectComponent from "@/components/projectComponent"
+
 export default {
   name: 'App',
   components: {
     ProjectComponent,
     AvatarComponent,
     LinkComponent
-    // HelloWorld
   },
   data () {
     return {
+
       experience: [
         {
           title: 'Front-end developer - OOO "Aeronavigator"',
-          description: 'Jul 2017 - Present'
+          description: 'Jul 2017 - Present',
+          link: 'http://aeronavigator.ru'
         }
       ],
       education: [
         {
           title: 'Saint Petersburg Electrotechnical University "LETI"',
-          description: '2016 - 2018, Master’s degree, Software Engineering'
+          description: '2016 - 2018, Master’s degree, Software Engineering',
+          link: 'https://etu.ru/'
         },
         {
           title: 'The Bonch-Bruevich Saint-Petersburg State University of Telecommunications',
-          description: '2012 - 2016, Bachelor’s degree, Software Engineering'
+          description: '2012 - 2016, Bachelor’s degree, Software Engineering',
+          link: 'https://www.sut.ru/'
         }
       ],
       links: [
@@ -147,6 +152,34 @@ export default {
           img: ''
         }
       ]
+    }
+  },
+  mounted () {
+    gsap.from('.header-name', {opacity: 0, duration: 0.5, y: -20})
+    let delay = 0.1
+    gsap.from('.experience-list', {opacity: 0, duration: 0.5, delay: delay, y: -20})
+    delay += 0.1
+    gsap.from('.header-education', {opacity: 0, duration: 0.5, delay: delay, y: -20})
+    delay += 0.1
+    gsap.from('.header-avatar', {opacity: 0, duration: 0.5, delay: delay, y: -20})
+    delay += 0.1
+    this.links.forEach((project, index) => {
+      gsap.from('.link-item[data-index="' + index + '"]', {opacity: 0, duration: 0.5, delay: delay, y: -20})
+      delay += 0.1
+    })
+    gsap.from('.divider', {opacity: 0, duration: 0.5, delay: delay, y: -20})
+    delay += 0.1
+    this.projects.forEach((project, index) => {
+      console.log(index)
+      gsap.from('.project[data-index="' + index + '"]', {opacity: 0, duration: 0.5, delay: delay, y: -20})
+      delay += 0.1
+    })
+  },
+  methods: {
+    openNewWindow (link) {
+      let otherWindow = window.open();
+      otherWindow.opener = null;
+      otherWindow.location = link;
     }
   }
 }

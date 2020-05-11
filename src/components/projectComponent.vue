@@ -13,5 +13,6 @@
 <style scoped>
   .project {
     background-color: #D7FDF0;
+    border-radius: 20px;
   }
 </style>
