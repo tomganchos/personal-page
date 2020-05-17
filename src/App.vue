@@ -5,7 +5,13 @@
     <header>
       <h1 class="header-name">Artem Kriuchkov</h1>
       <ul class="experience-list">
-        <li v-for="item in experience" :key="item.description" class="experience-item" @click="openNewWindow(item.link)">
+        <li v-for="(item, index) in experience"
+            :key="item.description"
+            :ref="'experience-item-' + index"
+            class="experience-item"
+            @click="openNewWindow(item.link)"
+            @mouseover="onMouseOver('experience-item-' + index)"
+            @mouseleave="onMouseLeave('experience-item-' + index)">
           <span class="experience-item__title">{{ item.title }}</span>
           <span class="experience-item__description">{{ item.description }}</span>
         </li>
@@ -13,7 +19,13 @@
       <div class="header-education">
         <h2 class="education-title">Education</h2>
         <ul class="education-list">
-          <li v-for="item in education" :key="item.description" class="education-item" @click="openNewWindow(item.link)">
+          <li v-for="(item, index) in education"
+              :key="item.description"
+              :ref="'education-item-' + index"
+              class="education-item"
+              @click="openNewWindow(item.link)"
+              @mouseover="onMouseOver('education-item-' + index)"
+              @mouseleave="onMouseLeave('education-item-' + index)">
             <span class="education-item__title">{{ item.title }}</span>
             <span class="education-item__description">{{ item.description }}</span>
           </li>
@@ -25,14 +37,17 @@
       <ul class="link-list">
         <link-component v-for="(item, index) in links"
                         :key="item.icon"
+                        :ref="item.icon"
                         :icon="item.icon"
                         :link="item.link"
                         :description="item.description"
                         :data-index="index"
-                        class="link-item"/>
+                        class="link-item"
+                        @mouseover="onMouseOver(item.icon)"
+                        @mouseleave="onMouseLeave(item.icon)"/>
       </ul>
     </header>
-    <div class="divider"/>
+    <div class="divider" ref="divider"/>
     <main>
       <project-component v-for="(item, index) in projects" :key="item.name" :data-index="index"/>
     </main>
@@ -78,7 +93,7 @@ export default {
         {
           link: 'https://github.com/tomganchos',
           description: 'github.com/tomganchos',
-          icon: 'github'
+          icon: 'github',
         },
         {
           link: 'https://www.linkedin.com/in/kriuchkov-art',
@@ -151,10 +166,39 @@ export default {
           img: ''
         }
       ],
-      themeColor: 'white-color'
+      themeColor: null,
+      themeColorsList: [
+        'turquoise', 'lemon', 'tomato', 'violet', 'lime'
+      ],
+      themeColors: {
+        turquoise: {
+          strong: '#48D1CC',
+          weak: 'rgba(175,238,238,0.3)'
+        },
+        lemon: {
+          strong: '#F0E68C',
+          weak: 'rgba(255,250,205,0.3)'
+        },
+        tomato: {
+          strong: '#FF6347',
+          weak: 'rgba(255,160,122,0.3)'
+        },
+        violet: {
+          strong: '#DDA0DD',
+          weak: 'rgba(216,191,216,0.3)'
+        },
+        lime: {
+          strong: '#00FF7F',
+          weak: 'rgba(152,251,152,0.3)'
+        }
+      }
     }
   },
+  created () {
+
+  },
   mounted () {
+    this.setFirstThemeColor()
     gsap.from('.header-name', {opacity: 0, duration: 0.5, y: -20})
     let delay = 0.1
     gsap.from('.experience-list', {opacity: 0, duration: 0.5, delay: delay, y: -20})
@@ -170,11 +214,11 @@ export default {
     gsap.from('.divider', {opacity: 0, duration: 0.5, delay: delay, y: -20})
     delay += 0.1
     this.projects.forEach((project, index) => {
-      console.log(index)
       gsap.from('.project[data-index="' + index + '"]', {opacity: 0, duration: 0.5, delay: delay, y: -20})
       delay += 0.1
     })
     this.setThemeColor()
+    console.log(this.$refs)
   },
   methods: {
     openNewWindow (link) {
@@ -182,13 +226,45 @@ export default {
       otherWindow.opener = null;
       otherWindow.location = link;
     },
+    setFirstThemeColor () {
+      this.themeColor = this.themeColorsList[Math.floor(Math.random() * this.themeColorsList.length)]
+      gsap.to('#app', {backgroundImage: 'linear-gradient(to bottom, ' +  this.themeColors[this.themeColor].weak + ' 0%, #FFFFFF 50%)' })
+      gsap.to('.experience-item:hover', {color: this.themeColors[this.themeColor].strong})
+      gsap.to('.education-item:hover', {color: this.themeColors[this.themeColor].strong})
+      gsap.to('.divider', {backgroundColor: this.themeColors[this.themeColor].strong})
+      gsap.to('.project', {backgroundColor: this.themeColors[this.themeColor].weak})
+      gsap.to('.header-avatar ellipse', {stroke: this.themeColors[this.themeColor].strong, fill: this.themeColors[this.themeColor].weak})
+    },
     setThemeColor () {
       setInterval(() => {
-        const palette = ['#FFDBA2', '#E8F1F2', '#C0DF85', '#E9F7CA', '#6CCFF6']
-        this.themeColor = palette[Math.floor(Math.random() * palette.length)]
-        console.log(this.themeColor)
-        gsap.to('#app', {backgroundImage: 'linear-gradient(to bottom, ' + this.themeColor + ' 0%, #FFFFFF 50%)', duration: 10 })
+        let themeColor = this.themeColorsList[Math.floor(Math.random() * this.themeColorsList.length)]
+        gsap.to('#app', {backgroundImage: 'linear-gradient(to bottom, ' + this.themeColors[themeColor].weak + ' 0%, #FFFFFF 50%)', duration: 10 })
+
+        // gsap.to('.experience-item:hover', {color: this.themeColors[themeColor].strong, duration: 10})
+        // gsap.to('.education-item:hover', {color: this.themeColors[themeColor].strong, duration: 10})
+        gsap.to('.divider', {backgroundColor: this.themeColors[themeColor].strong, duration: 10})
+        gsap.to('.project', {backgroundColor: this.themeColors[themeColor].weak, duration: 10})
+        gsap.to('.header-avatar ellipse', {stroke: this.themeColors[themeColor].strong, fill: this.themeColors[themeColor].weak, duration: 10})
       }, 10000)
+    },
+    onMouseOver (ref) {
+      const color = this.$refs.divider.style.backgroundColor
+      if (this.$refs[ref][0].$el) {
+        this.$refs[ref][0].$el.style.color = color
+        this.$refs[ref][0].$el.querySelector('svg .color').style.fill = color
+      } else {
+        this.$refs[ref][0].style.color = color
+        this.$refs[ref][0].lastChild.style.color = color
+      }
+    },
+    onMouseLeave (ref) {
+      if (this.$refs[ref][0].$el) {
+        this.$refs[ref][0].$el.style.color = '#000'
+        this.$refs[ref][0].$el.querySelector('svg .color').style = ''
+      } else {
+        this.$refs[ref][0].style.color = '#000'
+        this.$refs[ref][0].lastChild.style.color = '#888'
+      }
     }
   }
 }
@@ -233,7 +309,6 @@ export default {
     padding-bottom: 0.7em;
   }
   .experience-item:hover {
-    color: darkcyan;
     cursor: pointer;
   }
   .experience-item:last-child {
@@ -244,12 +319,9 @@ export default {
     text-align: right;
   }
   .experience-item__description {
-    color: #999;
+    color: #888;
     font-size: 0.9em;
     text-align: right;
-  }
-  .experience-item:hover .experience-item__description {
-    color: darkcyan;
   }
   .header-education {
     grid-column: 1;
@@ -258,12 +330,11 @@ export default {
   }
   .education-title {
     display: flex;
-    margin: 0;
+    margin: 0 0 0.3em 0;
     justify-content: flex-end;
     font-size: 0.8em;
-    color: #999;
+    color: #888;
     font-weight: normal;
-    margin-bottom: 0.3em;
   }
   .education-list {
     margin: 0;
@@ -280,7 +351,6 @@ export default {
     margin-bottom: 0;
   }
   .education-item:hover {
-    color: darkcyan;
     cursor: pointer;
   }
   .education-item__title {
@@ -289,11 +359,8 @@ export default {
   }
   .education-item__description {
     text-align: right;
-    color: #999;
+    color: #888;
     font-size: 0.9em;
-  }
-  .education-item:hover .education-item__description {
-    color: darkcyan;
   }
   .header-avatar {
     grid-column: 2;
@@ -317,7 +384,6 @@ export default {
     padding: 10px 0;
   }
   .link-item:hover {
-    color: darkcyan;
     cursor: pointer;
   }
   /*>>>.link-item path:hover {*/
@@ -334,7 +400,7 @@ export default {
     margin: 50px 0;
     width: 1200px;
     height: 4px;
-    background-color: #B4D6D3;
+    /*background-color: #B4D6D3;*/
     border-radius: 50%;
   }
   main {
