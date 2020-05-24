@@ -233,7 +233,7 @@ export default {
       gsap.to('.education-item:hover', {color: this.themeColors[this.themeColor].strong})
       gsap.to('.divider', {backgroundColor: this.themeColors[this.themeColor].strong})
       gsap.to('.project', {backgroundColor: this.themeColors[this.themeColor].weak})
-      gsap.to('.header-avatar ellipse', {stroke: this.themeColors[this.themeColor].strong, fill: this.themeColors[this.themeColor].weak})
+      gsap.to('.header-avatar ellipse.border', {stroke: this.themeColors[this.themeColor].strong, fill: this.themeColors[this.themeColor].weak})
     },
     setThemeColor () {
       setInterval(() => {
@@ -244,7 +244,7 @@ export default {
         // gsap.to('.education-item:hover', {color: this.themeColors[themeColor].strong, duration: 10})
         gsap.to('.divider', {backgroundColor: this.themeColors[themeColor].strong, duration: 10})
         gsap.to('.project', {backgroundColor: this.themeColors[themeColor].weak, duration: 10})
-        gsap.to('.header-avatar ellipse', {stroke: this.themeColors[themeColor].strong, fill: this.themeColors[themeColor].weak, duration: 10})
+        gsap.to('.header-avatar ellipse.border', {stroke: this.themeColors[themeColor].strong, fill: this.themeColors[themeColor].weak, duration: 10})
       }, 10000)
     },
     onMouseOver (ref) {
