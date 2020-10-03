@@ -49,7 +49,15 @@
     </header>
     <div class="divider" ref="divider"/>
     <main>
-      <project-component v-for="(item, index) in projects" :key="item.name" :data-index="index"/>
+      <project-component v-for="(item, index) in projects"
+                         :key="item.name"
+                         :project="item"
+                         :data-index="index"
+                         :project-index="index"
+                         :ref="'project-' + index"
+                         class="project"
+                         @mouseover="onMouseOver"
+                         @mouseleave="onMouseLeave"/>
     </main>
   </div>
 </template>
@@ -59,7 +67,7 @@
 
   import LinkComponent from "@/components/linkComponent"
   import AvatarComponent from "@/components/AvatarComponent"
-  import ProjectComponent from "@/components/projectComponent"
+  import ProjectComponent from "@/components/ProjectComponent"
 
 export default {
   name: 'App',
@@ -118,6 +126,13 @@ export default {
       ],
       projects: [
         {
+          name: 'Tourism site',
+          description: 'Site of Pskov children\'s tourism center',
+          tags: ['Vue', 'vuex', 'vue-router', 'axios', 'vue-google-adsense', 'vue-yandex-maps', 'moment'],
+          img: 'project-tourism-site.png',
+          link: 'http://turizmpskov.ru/'
+        },
+        {
           name: 'gameLife',
           description: 'Conway\'s Game of Life',
           tags: ['Vue', 'css'],
@@ -155,12 +170,6 @@ export default {
         },
         {
           name: 'tourismSite5',
-          description: 'Site of Pskov child tourism',
-          tags: ['Vue', 'css'],
-          img: ''
-        },
-        {
-          name: 'tourismSite6',
           description: 'Site of Pskov child tourism',
           tags: ['Vue', 'css'],
           img: ''
@@ -214,7 +223,7 @@ export default {
     gsap.from('.divider', {opacity: 0, duration: 0.5, delay: delay, y: -20})
     delay += 0.1
     this.projects.forEach((project, index) => {
-      gsap.from('.project[data-index="' + index + '"]', {opacity: 0, duration: 0.5, delay: delay, y: -20})
+      gsap.from('.project[project-index="' + index + '"]', {opacity: 0, duration: 0.5, delay: delay, y: -20})
       delay += 0.1
     })
     this.setThemeColor()
@@ -249,7 +258,9 @@ export default {
     },
     onMouseOver (ref) {
       const color = this.$refs.divider.style.backgroundColor
-      if (this.$refs[ref][0].$el) {
+      if (this.$refs[ref][0].$el && this.$refs[ref][0].$el.classList.contains('project')) {
+        this.$refs[ref][0].$el.querySelector('.project-name').style.color = color
+      } else if (this.$refs[ref][0].$el) {
         this.$refs[ref][0].$el.style.color = color
         this.$refs[ref][0].$el.querySelector('svg .color').style.fill = color
       } else {
@@ -258,7 +269,9 @@ export default {
       }
     },
     onMouseLeave (ref) {
-      if (this.$refs[ref][0].$el) {
+      if (this.$refs[ref][0].$el && this.$refs[ref][0].$el.classList.contains('project')) {
+        this.$refs[ref][0].$el.querySelector('.project-name').style.color = '#000'
+      } else if (this.$refs[ref][0].$el) {
         this.$refs[ref][0].$el.style.color = '#000'
         this.$refs[ref][0].$el.querySelector('svg .color').style = ''
       } else {
@@ -408,5 +421,8 @@ export default {
     grid-template-columns: 300px 300px 300px;
     grid-template-rows: 200px 200px 200px;
     grid-gap: 50px;
+  }
+  main >>> .project .project-name:hover {
+
   }
 </style>
