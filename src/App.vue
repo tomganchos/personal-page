@@ -419,10 +419,98 @@ export default {
   main {
     display: grid;
     grid-template-columns: 300px 300px 300px;
-    grid-template-rows: 200px 200px 200px;
     grid-gap: 50px;
+    margin-bottom: 50px;
   }
-  main >>> .project .project-name:hover {
-
+  @media screen and (max-width: 1299px) {
+    header {
+      grid-template-columns: 350px 400px 350px;
+    }
+    .divider {
+      width: 1050px;
+    }
+  }
+  @media screen and (max-width: 1099px) {
+    header {
+      grid-template-columns: 350px 350px;
+      grid-column-gap: 50px;
+      margin-top: 2em;
+    }
+    .header-avatar {
+      grid-column: 2;
+      grid-row: 1;
+      height: 50px;
+      width: 50px;
+    }
+    .header-avatar svg {
+      height: 50px !important
+    }
+    .link-list {
+      grid-column: 2;
+    }
+    .divider {
+      width: 700px;
+    }
+    main {
+      grid-template-columns: 300px 300px;
+    }
+  }
+  @media screen and (max-width: 749px) {
+    header {
+      grid-template-columns: auto;
+      margin: 1em 1em 0 1em;
+    }
+    .header-avatar {
+      grid-column: 1;
+    }
+    .header-name {
+      grid-column: 1;
+      grid-row: 1;
+      display: flex;
+      align-items: center;
+    }
+    .experience-list {
+      justify-self: start;
+      margin-top: 10px;
+    }
+    .experience-item {
+      align-items: flex-start;
+    }
+    .experience-item__title {
+      text-align: left;
+    }
+    .header-education {
+      margin: 25px 0;
+    }
+    .education-title {
+      justify-content: flex-start;
+    }
+    .education-item {
+      align-items: flex-start;
+    }
+    .education-item__title {
+      text-align: left;
+    }
+    .education-item__description {
+      text-align: left;
+    }
+    .link-list {
+      grid-column: 1;
+      grid-row: 5 / 7;
+    }
+    /*.education-item {*/
+    /*  align-items: flex-start;*/
+    /*}*/
+    /*.education-item__title {*/
+    /*  text-align: left;*/
+    /*}*/
+    .divider {
+      width: 350px;
+      margin: 25px 0;
+    }
+    main {
+      grid-template-columns: 300px;
+      grid-gap: 25px;
+    }
   }
 </style>

@@ -35,6 +35,7 @@
     background-color: #D7FDF0;
     border-radius: 20px;
     position: relative;
+    height: 200px;
   }
   .project .project-text {
     position: absolute;
