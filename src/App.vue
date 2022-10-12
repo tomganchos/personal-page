@@ -48,7 +48,7 @@
       </ul>
     </header>
     <div class="divider" ref="divider"/>
-    <main>
+    <main style="display: none">
       <project-component v-for="(item, index) in projects"
                          :key="item.name"
                          :project="item"
@@ -80,8 +80,13 @@ export default {
     return {
       experience: [
         {
+          title: 'Front-end developer - Moeco IoT, Inc',
+          description: 'Jan 2021 - Present',
+          link: 'https://moeco.io/'
+        },
+        {
           title: 'Front-end developer - OOO "Aeronavigator"',
-          description: 'Jul 2017 - Present',
+          description: 'Jul 2017 - Feb 2021',
           link: 'http://aeronavigator.ru'
         }
       ],
